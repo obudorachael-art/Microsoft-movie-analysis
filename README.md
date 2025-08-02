@@ -24,21 +24,13 @@ The data collected is analised to show the most trending movie genres and their 
 VISUALIZATION
 
 Data cleaning and merging/joining
-
-
-[ ]
-import pandas as pd
+- Importing necessary libraries
+ import pandas as pd
 import numpy as np
-import matplotlib.pyplot as plt
+import matplot.pyplot as plt
 import seaborn as sns
 
-[ ]
-df = pd.read_csv('/content/imdb.title.basics.csv.gz')
-df.head()
-
-
-[ ]
-df.info()
+# Importing data and checking the data type
 <class 'pandas.core.frame.DataFrame'>
 RangeIndex: 146144 entries, 0 to 146143
 Data columns (total 6 columns):
@@ -47,27 +39,13 @@ Data columns (total 6 columns):
  0   tconst           146144 non-null  object 
  1   primary_title    146143 non-null  object 
  2   original_title   146122 non-null  object 
- 3   start_year       146144 non-null  int64  
- 4   runtime_minutes  114405 non-null  float64
- 5   genres           140736 non-null  object 
-dtypes: float64(1), int64(1), object(4)
-memory usage: 6.7+ MB
 
-[ ]
-# checking for duplicates
-df.duplicated().sum()
-np.int64(0)
+# checking for duplicate
 
-[ ]
 # checking for missing data
-df.isnull().sum()
 
-
-[ ]
 # dropping the missing columns
 
-df.dropna(subset=['primary_title', 'original_title', 'runtime_minutes', 'genres'], inplace=True)
-print(df)
            tconst                                      primary_title  \
 0       tt0063540                                          Sunghursh   
 1       tt0066787                    One Day Before the Rainy Season   
@@ -109,13 +87,6 @@ print(df)
 
 [112232 rows x 6 columns]
 
-[ ]
-df1 = pd.read_csv('/content/imdb.title.ratings.csv.gz')
-df1.head()
-
-
-[ ]
-df1.info()
 <class 'pandas.core.frame.DataFrame'>
 RangeIndex: 73856 entries, 0 to 73855
 Data columns (total 3 columns):
@@ -127,23 +98,11 @@ Data columns (total 3 columns):
 dtypes: float64(1), int64(1), object(1)
 memory usage: 1.7+ MB
 
-[ ]
-# checking for duplicates
-df1.duplicated().sum()
-np.int64(0)
 
-[ ]
+# checking for duplicate
+
+
 # checking for missing data
-df1.isnull().sum()
-
-
-[ ]
-df2 = pd.read_csv('/content/bom.movie_gross.csv.gz')
-df2.head()
-
-
-[ ]
-df2.info()
 <class 'pandas.core.frame.DataFrame'>
 RangeIndex: 3387 entries, 0 to 3386
 Data columns (total 5 columns):
@@ -157,20 +116,13 @@ Data columns (total 5 columns):
 dtypes: float64(1), int64(1), object(3)
 memory usage: 132.4+ KB
 
-[ ]
+
 # checking for duplicates
-df2.duplicated().sum()
-np.int64(0)
 
-[ ]
 # checking for missing data
-df2.isnull().sum()
 
-
-[ ]
 # dropping the missing columns
-df2.dropna(subset=['studio', 'domestic_gross', 'foreign_gross'], inplace=True)
-print(df2)
+
                                                   title        studio  \
 0                                           Toy Story 3            BV   
 1                            Alice in Wonderland (2010)            BV   
@@ -199,18 +151,10 @@ print(df2)
 
 [2007 rows x 5 columns]
 
-[ ]
+
 # merging the datasets
-df3 = pd.merge(df, df1, on='tconst')
-df3.head()
 
-
-[ ]
-df3.info()
-<class 'pandas.core.frame.DataFrame'>
-RangeIndex: 65720 entries, 0 to 65719
-Data columns (total 8 columns):
- #   Column           Non-Null Count  Dtype  
+    Column           Non-Null Count  Dtype  
 ---  ------           --------------  -----  
  0   tconst           65720 non-null  object 
  1   primary_title    65720 non-null  object 
@@ -223,33 +167,12 @@ Data columns (total 8 columns):
 dtypes: float64(2), int64(2), object(4)
 memory usage: 4.0+ MB
 
-[ ]
-df3.describe()
-
-
-[ ]
 # plotting histogram
-plt.hist(df3['averagerating'], bins=10, color='blue', edgecolor='black')
-plt.xlabel('Average Rating')
-plt.ylabel('Frequency')
-plt.title('Histogram of Average Ratings')
-plt.show()
 
-
-[ ]
 # plotting a scatter diagram
-plt.scatter(df3['averagerating'], df3['numvotes'], color='green')
-plt.xlabel('Average Rating')
-plt.ylabel('Number of Votes')
-plt.title('Scatter Plot of Average Ratings vs. Number of Votes')
-plt.show()
 
-
-[ ]
 # sort by most rated genre in descnding order and take top 10
 
-most_rated_genres = df3['genres'].value_counts().head(10)
-print(most_rated_genres)
 genres
 Drama          28394
 Documentary    16423
@@ -263,13 +186,7 @@ Biography       3693
 Adventure       3621
 Name: count, dtype: int64
 
-[ ]
 # plotting a bar chart of most rated genres
-
-plt.bar(most_rated_genres.index, most_rated_genres.values)
-plt.xlabel('Genre')
-plt.ylabel('Number of Movies')
-plt.title('Most Rated Genres')
-plt.xticks(rotation=45)
-plt.show()
+# Recommendation
+I recommend that the manager of the new movie studio at the Microsoft to consider the first three most rated genres when producing movies. This is because these are the most trending movies that will give the company good returns.
 
